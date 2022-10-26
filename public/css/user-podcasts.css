@@ -1,0 +1,150 @@
+
+body{
+    background-color: #413F42 !important; 
+    padding: 0;
+    margin: 0;
+    font: 1em sans-serif;
+    color: #CA955C !important;
+    text-decoration: none;
+    align-content: center;
+    position: relative;
+    /* padding-left: 100px; */
+    box-sizing: border-box;
+ }
+
+ .userIndexSonglist{
+    width: 200px;
+    height: 200px;
+    border-radius: 10%;
+    box-shadow:5px 10px 8px #282b2d;
+}
+
+.scrollDiv{
+    display: flex;
+    /* background-color: blue; */
+    gap: 50px;
+    margin-left: 60px;
+    padding: 20px;
+    width: 90%;
+    overflow-x: scroll;
+    padding-left: 70px;
+}
+
+.scrollDiv::-webkit-scrollbar{
+    -webkit-appearance: none;
+}
+
+.content{
+    color: aliceblue;
+    text-align: center;
+    font-size: 20px;
+}
+
+.lists{
+    transition: all 200ms ease-in-out;
+}
+
+.lists:hover{
+    transform: scale(1.1);
+}
+
+.podcast-songlist-header{
+    /* top: -100px; */
+    /* background-color: red; */
+    width: 6000px;
+    /* margin-top: -230px; */
+    /* margin-left: 20%; */
+}
+
+.podcast-songlist-cover{
+    width: 100%; 
+    height: 250px; 
+    object-fit:cover; 
+    object-position: 20% 60%;  
+    position: absolute;
+    z-index: 99;
+    /* margin-top: -55px; */
+    top: 0;
+}
+
+.podcast-songlist-header-content{
+    display: flex;
+    align-items: center;
+    background-color: #CA955C;
+    color: aliceblue;
+    position: absolute;
+    width: 100%;
+    justify-content: center;
+    gap: 1000px;
+    border-radius: 20px;
+    top: 50%;
+    margin-top: 15%;
+    height: 120px;
+    z-index: 10;
+}
+
+.podcast-lists-container{
+    background-color: #2C3333;
+    width: 600px;
+    align-items: center;
+    margin-left: 30%;
+    margin-top: 60px;
+    height: 500px;
+    padding-top: 20px;
+    border-radius: 30px;
+    overflow-y: scroll;
+
+}
+
+.podcast-lists-container::-webkit-scrollbar{
+    -webkit-appearance: none;
+}
+
+#a1{
+    /* background-color: red; */
+    position: absolute;
+    margin-top: 25%;
+}
+
+.podcast-lists{
+    margin-left: 5%;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    font-size: 20px;
+    color: aliceblue;
+    background-color: #313940;
+    width: 500px;
+    /* justify-content: center; */
+    line-height: 20px;
+    margin-bottom: 5px;
+    border-radius: 10px;
+    transition: all 200ms ease-in-out;
+}
+
+.podcast-lists:hover{
+    box-shadow: 15px 10px 10px #282b2d;
+    transform: scale(1.1);
+}
+
+.pcastname{
+    color: gray;
+    font-size: 15px;
+    text-align: center;
+}
+
+.navi-buttons{
+    display: flex;
+    gap: 50px;
+    align-items: center;
+    /* background-color: red; */
+    margin-left: 70px;
+    cursor: pointer;
+    color: #CA955C;
+
+}
+
+.navi{
+    font-size: 30px;
+}
+

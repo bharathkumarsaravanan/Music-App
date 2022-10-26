@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom Playlist</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <table class="table-properties">
+        <tr>
+            <td><img src="/images/<%=coverFolder%>/<%=element.image_path%>" alt="" class="artistImage"></td>
+        </tr>
+        <tr>
+            <td class="element"><h2><%=element.name%></h2></td>
+        </tr>
+    </table>
+
+    <table class="playlist-row">
+        <% for(var i = 0; i < songs.length; i++){ %>
+    <div class="song-bg">
+        <tr>
+                <td> <img src="/images/<%=folder%>/<%=songs[i].imagepath%>" alt="" class="playlistSongImage "></td>
+                <td class="space">
+                    <h3><%=songs[i].songname%></h3>
+                   
+                </td>
+                <td><%=songs[i].moviename%></td>
+                <td>
+                    <audio controls class="playlistAudio audiospace">
+                        <source src="/audios/<%=songs[i].audiopath%>">
+                    </audio>
+                </td>    
+        </tr>
+    </div>
+    <%}%>
+    </table>
+    <a href="/<%=id%>/songs">Home</a>
+</body>
+</html>

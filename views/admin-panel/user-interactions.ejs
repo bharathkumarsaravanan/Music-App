@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>admin-index</title>
+      <!-- css  -->
+      <link rel="stylesheet" href="/css/admin.css">
+      <!-- bootstrap -->
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+       <!-- font awesome -->
+      <script src="https://kit.fontawesome.com/9ef23986b0.js" crossorigin="anonymous"></script>
+      <!-- user graph -->
+      <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script> -->
+
+      <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+</head>
+<body>
+
+    <div class="header">
+        <a href="/admin/<%=admin%>/dashboard" class="header-content" style="text-decoration: none; color: #CA955C;">Dashboard</a>
+        <div class="header-content" id="selected">User Interactions</div>
+        <a href="/admin/<%=admin%>/requests" class="header-content" style="text-decoration: none; color: #CA955C;">Requests</a>
+        <a href="#" class="header-content" style="text-decoration: none; color: #CA955C;">Incomes</a>
+        <!-- <a href="/admin/<%=admin%>/update" class="header-content" style="text-decoration: none; color: #CA955C;">Updates</a> -->
+
+        <div class="header-content" onclick="updates()">Updates </div>
+        
+            <div class="content-options" style="right: 450px; top: 40px;" id="updatesMenu">
+                <div id="op"><a href="/admin/<%=admin%>/subscriptionsupdate" style="text-decoration: none; color: black" >Subscriptions</a></div>
+                <div id="op"><a href="/admin/<%=admin%>/songupdate" style="text-decoration: none; color: black;" >Song Updates</a></div>
+            </div>
+
+        <a href="/admin/<%=admin%>/songlist" class="header-content" style="text-decoration: none; color: #CA955C;">Song List</a>
+        <a href="/admin/<%=admin%>/elements" class="header-content" style="text-decoration: none; color: #CA955C;">Groups</a>
+    </div>
+
+    <div class="graph-container">
+        <div class="user-graph">
+            <!-- <h3>New users</h3> -->
+            <canvas id="myChart" style="width:600px;max-width:700px; height:400px;"></canvas>
+        </div>
+        <div class="plan-graph">
+                <canvas id="myChart2" style="width:600px;max-width:700px; height:400px;"></canvas>
+        </div>
+    </div>
+    
+
+    <div class="user-counts">
+        <div class="totalUsers"> 
+            <h1 class="userHeader">Total Users</h1>
+            <h1 class="userCount"></h1>
+        </div>
+        <div class="currentUsers"> 
+            <h1 class="userHeader">Active Users</h1>
+            <h1 class="userCount"></h1>
+        </div>
+    </div>
+
+    
+    <script>
+
+
+        var updatesMenuCount = 0;
+        function updates(){
+            var updatesMenu = document.querySelector('#updatesMenu');
+            if(updatesMenuCount === 0){
+                updatesMenu.classList.add('active')
+                updatesMenuCount = 1;
+            }else{
+                updatesMenu.classList.remove('active')
+                updatesMenuCount = 0;
+            }
+        }
+
+
+        fetch('http://localhost:3000/admin/1/index/graph')
+        .then((response) => response.json())
+        .then((graphData) => {
+            console.log(graphData)
+            var userCount = graphData.users;
+            var date = graphData.date;
+
+          const labels = date;
+
+            const data = {
+                labels: labels,
+                datasets: [{
+                label: 'New users',
+                backgroundColor: 'rgb(255, 99, 132)',
+                borderColor: 'rgb(255, 99, 132)',
+                data: userCount,
+                }],
+            };
+
+            const config = {
+                type: 'line',
+                data: data,
+                options: {
+                    scales: {
+                        y: {
+                            max: 30,
+                            min: 0,
+                            ticks: {
+                                stepSize: 2
+                            }
+                        }
+                    }
+                }
+            };
+
+            const myChart = new Chart(
+            document.getElementById('myChart'),
+            config
+            );
+        })
+
+
+  
+
+        // plan chart 
+
+        fetch('http://localhost:3000/admin/1/index/bargraph')
+        .then((response) => response.json())
+        .then((graphData) => {
+
+            // console.log(graphData.acountType[1].users)
+
+            var labels = [
+           'Premium',
+           'Regular'
+        ]
+        var data = {
+
+            labels: labels,
+            datasets: [{
+                label: 'Plans',
+                data: [graphData.acountType[1].users, graphData.acountType[0].users],
+                backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+     
+                ],
+                borderColor:[
+                'rgb(255, 99, 132)',
+                'rgb(255, 159, 64)'
+                ],
+                borderWidth: 1
+            }] 
+        };
+
+        const config = {
+        type: 'bar',
+        data: data,
+        options: {
+            scales: {
+            y: {
+                beginAtZero: true
+            }
+            }
+        },
+        };
+
+        const myChart2 = new Chart(
+            document.querySelector('#myChart2'),
+            config
+        );
+
+        })
+
+     
+
+
+        // user count 
+
+        fetch('http://localhost:3000/admin/<%=admin%>/index/usercount')
+        .then((response) => response.json())
+        .then((userCountData) => {
+            console.log(userCountData);
+            console.log(userCountData.totalUsers[0].users)
+
+            var totalUserCount = document.querySelector('.totalUsers').querySelector('.userCount');
+            totalUserCount.textContent =userCountData.totalUsers[0].users;
+
+            var currentUserCount = document.querySelector('.currentUsers').querySelector('.userCount');
+            currentUserCount.textContent =userCountData.activeUsers[0].activeUsers;
+
+        })
+
+    </script>
+
+</body>
+</html>

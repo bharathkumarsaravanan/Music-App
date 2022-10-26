@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>user playlists</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <script src="https://kit.fontawesome.com/9ef23986b0.js" crossorigin="anonymous"></script>
+
+</head>
+<body>
+    <div class="add"><a href="/<%=user%>/playlists/<%=playlistid%>/songs/add" style="text-decoration: none; color: white;">add songs</a></div>
+
+    <% for(var i = 0; i < songs.length; i++){ %>
+    <div class="songList">
+        <div><img src="/images/movies/<%=movies[i].image_path%>" alt="" class="playlistSongImage"></div>
+        <div>
+            <div class="wid content"><%=songs[i].song_name%></div>
+            <div class="wid content faded"><%=movies[i].movie%></div>
+        </div>
+        <div class="wid content faded"><%=artists[i].artist%></div>
+        <div class="navi-buttons">
+            <div><i class="fa-solid fa-backward navi"></i></div>
+            <div><i class="fa-solid fa-play navi"></i></div>
+            <div><i class="fa-solid fa-forward navi"></i></div>
+        </div>
+       <div><i class="fa-solid fa-ellipsis-vertical op-button"></i></div>
+        <div>
+            <audio>
+                <source src="/audios/<%=songs[i].file_path%>">
+            </audio>
+        </div>
+        <div><a href="/<%=user%>/playlists/<%=playlistid%>/songs/list/remove/<%=songs[i].id%>" id="<%=songs[i].id%>" class="link" style="color: white; text-decoration:none">Remove</a></div>
+    </div>
+    <% } %>
+
+    
+    <!-- <table>
+        <% for(var i = 0; i < songs.length; i++){ %>
+            <tr>
+                <td><img src="/images/movies/<%=movies[i].image_path%>" alt="" class="playlistSongImage"></td>
+                <td><%=songs[i].song_name%></td>
+                <td><%=movies[i].name%></td>
+                <td><%=artists[i].name%></td>
+                <td>
+                    <audio controls>
+                        <source src="/audios/<%=songs[i].file_path%>">
+                    </audio>
+                </td>
+            </tr>
+        <% } %> -->
+     
+    </table>
+</body>
+</html>

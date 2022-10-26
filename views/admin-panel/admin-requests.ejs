@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+      <!-- css  -->
+      <link rel="stylesheet" href="/css/admin.css">
+      <!-- bootstrap -->
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+       <!-- font awesome -->
+      <script src="https://kit.fontawesome.com/9ef23986b0.js" crossorigin="anonymous"></script>
+</head>
+<body>
+
+    <div class="header">
+        <a href="/admin/<%=admin%>/dashboard" class="header-content" style="text-decoration: none; color: #CA955C;">Dashboard</a>
+        <a href="/admin/<%=admin%>/userinteractions" class="header-content" style="text-decoration: none; color: #CA955C;">User Interactions</a>
+        <div class="header-content" id="selected">Requests</div>
+        <a href="#" class="header-content" style="text-decoration: none; color: #CA955C;">Incomes</a>
+        <!-- <a href="/admin/<%=admin%>/update" class="header-content" style="text-decoration: none; color: #CA955C;">Updates</a> -->
+        <div class="header-content" onclick="updates()">Updates </div>
+        
+        <div class="content-options" style="right: 450px; top: 40px;" id="updatesMenu">
+            <div id="op"><a href="/admin/<%=admin%>/subscriptionsupdate" style="text-decoration: none; color: black" >Subscriptions</a></div>
+            <div id="op"><a href="/admin/<%=admin%>/songupdate" style="text-decoration: none; color: black;" >Song Updates</a></div>
+        </div>
+        
+        <a href="/admin/<%=admin%>/songlist" class="header-content" style="text-decoration: none; color: #CA955C;">Song List</a>
+        <a href="/admin/<%=admin%>/elements" class="header-content" style="text-decoration: none; color: #CA955C;">Groups</a>
+    </div>
+
+    <div class="body-request">
+        <div class="request-header"><h2 class="request-head">User requests</h2></div>
+    <table class="table table-hover">
+        <tr>
+            <th>Request id</th>
+            <th>User id</th>
+            <th>Song name</th>
+            <th>Movie name</th>
+        </tr>
+
+    <%  for(var i = 0; i < request.length; i++){ %>
+        <tr>
+            <td><%= request[i].id %></td>
+            <td><%= request[i].userid %></td>
+            <td><%= request[i].song_name %></td>
+            <td><%= request[i].movie_name %></td>
+            <td class=""><a href="/admin/<%=admin%>/<%=request[i].id %>/approve" class="btn btn-primary link-btn">Approve</a></td>
+            <td class="btn2"><a href="/admin/<%=admin%>/<%= request[i].id %>/decline" class="btn btn-danger">Decline</a></td>
+        </tr>
+
+    <% } %>
+       
+
+    </table>
+  
+
+</div>
+
+<script>
+    var updatesMenuCount = 0;
+    function updates(){
+        var updatesMenu = document.querySelector('#updatesMenu');
+        if(updatesMenuCount === 0){
+            updatesMenu.classList.add('active')
+            updatesMenuCount = 1;
+        }else{
+            updatesMenu.classList.remove('active')
+            updatesMenuCount = 0;
+        }
+    }
+</script>
+</body>
+</html>

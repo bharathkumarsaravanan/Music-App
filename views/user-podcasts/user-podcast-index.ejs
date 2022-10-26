@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>podcasts</title>
+    <link rel="stylesheet" href="/css/user-podcasts.css">
+</head>
+<body>
+    <div>
+        <h1>Latest</h1>
+            <div class="scrollDiv">
+                <% for(var i = 0; i < latestEpisodes.length; i++) { %>
+                    <div class="lists">
+                        <div><img src="/images/podcast-profiles/<%=latestEpisodes[i].profile%>" class="userIndexSonglist" alt="" ></div>
+                        <div class="content"><%=latestEpisodes[i].audioname%></div>
+                        <div class="content" style="font-size: 15px; color:gray;"><%=latestEpisodes[i].podcastname%></div>
+                        <div><audio src="/audios/podcast-audios/<%=latestEpisodes[i].audiopath%>"></audio></div>
+                    </div>
+                <%}%>   
+            </div>
+    </div>
+
+    <div>
+        <h1>Latest Podcasts</h1>
+            <div class="scrollDiv">
+                <% for(var j = 0; j < latestPodcasts.length; j++) { %>
+                    <a href="/<%=user%>/podcasts/<%=latestPodcasts[j].id%>" class="lists" style="text-decoration: none;">
+                        <div><img src="/images/podcast-profiles/<%=latestPodcasts[j].profile_path%>" class="userIndexSonglist" alt="" ></div>
+                        <div class="content"><%=latestPodcasts[j].name%></div>
+                    </a>
+                <%}%>   
+            </div>
+    </div>
+    
+</body>
+</html>

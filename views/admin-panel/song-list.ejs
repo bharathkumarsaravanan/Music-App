@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>song-list</title>
+     <!-- css  -->
+     <link rel="stylesheet" href="/css/admin.css">
+     <!-- bootstrap -->
+     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+      <!-- font awesome -->
+     <script src="https://kit.fontawesome.com/9ef23986b0.js" crossorigin="anonymous"></script>
+</head>
+<body>
+  <div class="header"> 
+    <a href="/admin/<%=admin%>/dashboard" class="header-content" style="text-decoration: none; color: #CA955C;">Dashboard</a>
+    <a href="/admin/<%=admin%>/userinteractions" class="header-content" style="text-decoration: none; color: #CA955C;">User Interactions</a>
+    <a href="/admin/<%=admin%>/requests" class="header-content"  style="text-decoration: none; color: #CA955C;">Requests</ax    >
+    <a href="#" class="header-content" style="text-decoration: none; color: #CA955C;">Incomes</a>
+    <!-- <a href="/admin/<%=admin%>/update" class="header-content" style="text-decoration: none; color: #CA955C;">Updates</a> -->
+    <div class="header-content" onclick="updates()">Updates </div>
+        
+            <div class="content-options" style="right: 450px; top: 40px;" id="updatesMenu">
+                <div id="op"><a href="/admin/<%=admin%>/subscriptionsupdate" style="text-decoration: none; color: black" >Subscriptions</a></div>
+                <div id="op"><a href="/admin/<%=admin%>/songupdate" style="text-decoration: none; color: black;" >Song Updates</a></div>
+            </div>
+            
+    <div class="header-content" id="selected">Song List</div>
+    <a href="/admin/<%=admin%>/elements" class="header-content" style="text-decoration: none; color: #CA955C;">Groups</a>
+</div>
+   
+
+
+<div class="mb-3 row" style="display: flex; margin-left: 60%; margin-top: 15px;">
+        <div style="width: 500px; background-color: #413F42;"><input type="text" id="search" onkeyup="search()" class="form-control"></div>
+        <div style="position: absolute; margin-left: 440px; font-size: 20px;"><button onclick="search()" class="searchIcon" style="background-color: transparent;"><i class="fa-solid fa-magnifying-glass"></i></button></div>
+</div>
+
+<div>
+    <table id="searchoutput" class="table table-hover">
+
+    </table> 
+</div>
+
+
+    <table class="table table-hover">
+        <tr>
+            <th>id</th>
+            <th>Song</th>
+            <th>Movie</th>
+            <th>Genre</th>
+            <th>Artist</th>
+        </tr>
+    <%  for(var i = 0; i < row.length; i++){ %>
+        <tr>
+            <td><%=row[i].id%></td>
+            <td><%=row[i].song%></td>
+            <td><%=row[i].movie%></td>
+            <td><%=genre[i].name%></td>
+            <td><%=artist[i].name%></td>
+            <td><a href="/admin/<%=admin%>/song-list/<%=row[i].id%>/delete" class="btn btn-danger link-btn">Delete</a></td>
+            <td><a href="/admin/<%=admin%>/song-list/<%=row[i].id%>/modify" class="btn btn-primary">Modify</a></td>
+        </tr>
+    <%}%>
+
+        
+    </table>
+
+    
+
+
+    <script>
+
+        var updatesMenuCount = 0;
+        function updates(){
+            var updatesMenu = document.querySelector('#updatesMenu');
+            if(updatesMenuCount === 0){
+                updatesMenu.classList.add('active')
+                updatesMenuCount = 1;
+            }else{
+                updatesMenu.classList.remove('active')
+                updatesMenuCount = 0;
+            }
+        }
+
+        fetch('http://localhost:3000/admin/1/songlist/data')
+        .then((response) => response.json())
+        .then((data) => {
+            console.log(data);
+
+            // var genres = data.genre
+            // var list = document.getElementById('genreList')
+            // for( var j = 0; j < genres.length; j++){
+            //     const entry = document.createElement('li')
+            //     console.log(genres[j])
+            //     entry.appendChild(document.createTextNode(genres[j].name))
+            //     list.appendChild(entry);
+            // }
+            
+        });
+
+        function search(){
+            var output = document.getElementById('searchoutput');
+            var Item = document.getElementById('search').value;
+            var searchedItem = Item.toLowerCase();
+            fetch('http://localhost:3000/admin/1/songlist/data?q='+searchedItem)
+            .then((response) => response.json())
+            .then((data) => {
+                console.log(searchedItem)
+
+                var rowCount = 0
+                for(var j = 0; j < data.songs.length; j++){
+                    var deleteUrl = "/admin/"+data.admin + "/song-list/"+data.songs[j].id +"/delete"
+                    var modifyUrl = "/admin/"+data.admin + "/song-list/"+data.songs[j].id +"/modify"
+                    
+                    if(searchedItem == data.songs[j].movie.toLowerCase()){
+                        var row = output.insertRow(rowCount)
+                        var cell1 = row.insertCell(0)
+                        var cell2 = row.insertCell(1)
+                        var cell3 = row.insertCell(2)
+                        var cell4 = row.insertCell(3)
+                        var cell5 = row.insertCell(4)
+                        var cell6 = row.insertCell(5)
+                        var cell7 = row.insertCell(6)
+
+                        cell1.innerHTML = data.songs[j].id
+                        cell2.innerHTML = data.songs[j].song
+                        cell3.innerHTML = data.songs[j].movie
+                        cell4.innerHTML = data.songs[j].artist
+                        cell5.innerHTML = data.songs[j].genre
+
+                        // delete button 
+                        var a = document.createElement('a')
+                        var del = document.createTextNode("Delete")
+                        
+                        a.appendChild(del);
+                        a.classList = "btn btn-danger link-btn";
+                        a.href = deleteUrl;
+                        
+                        cell6.appendChild(a);
+
+                        // modify button
+                        var a1 = document.createElement('a')
+                        var mod = document.createTextNode("Modify")
+                        
+                        a1.appendChild(mod);
+                        a1.classList = "btn btn-primary";
+                        a1.href = modifyUrl;
+                        
+                        cell7.appendChild(a1);
+
+                        rowCount= rowCount+1;
+                    }
+                    else if(searchedItem == data.songs[j].artist.toLowerCase()){
+                        var row = output.insertRow(rowCount)
+                        var cell1 = row.insertCell(0)
+                        var cell2 = row.insertCell(1)
+                        var cell3 = row.insertCell(2)
+                        var cell4 = row.insertCell(3)
+                        var cell5 = row.insertCell(4)
+                        var cell6 = row.insertCell(5)
+                        var cell7 = row.insertCell(6)
+
+                        cell1.innerHTML = data.songs[j].id
+                        cell2.innerHTML = data.songs[j].song
+                        cell3.innerHTML = data.songs[j].movie
+                        cell4.innerHTML = data.songs[j].artist
+                        cell5.innerHTML = data.songs[j].genre
+
+                         // delete button 
+                         var a = document.createElement('a')
+                        var del = document.createTextNode("Delete")
+                        
+                        a.appendChild(del);
+                        a.classList = "btn btn-danger link-btn";
+                        a.href = deleteUrl;
+                        
+                        cell6.appendChild(a);
+
+                        // modify button
+                        var a1 = document.createElement('a')
+                        var mod = document.createTextNode("Modify")
+                        
+                        a1.appendChild(mod);
+                        a1.classList = "btn btn-primary";
+                        a1.href = modifyUrl;
+                        
+                        cell7.appendChild(a1);
+                        
+                        rowCount= rowCount+1;
+                    }else if(searchedItem == data.songs[j].song.toLowerCase()){
+                        var row = output.insertRow(rowCount)
+                        var cell1 = row.insertCell(0)
+                        var cell2 = row.insertCell(1)
+                        var cell3 = row.insertCell(2)
+                        var cell4 = row.insertCell(3)
+                        var cell5 = row.insertCell(4)
+                        var cell6 = row.insertCell(5)
+                        var cell7 = row.insertCell(6)
+
+                        cell1.innerHTML = data.songs[j].id
+                        cell2.innerHTML = data.songs[j].song
+                        cell3.innerHTML = data.songs[j].movie
+                        cell4.innerHTML = data.songs[j].artist
+                        cell5.innerHTML = data.songs[j].genre
+
+                         // delete button 
+                         var a = document.createElement('a')
+                        var del = document.createTextNode("Delete")
+                        
+                        a.appendChild(del);
+                        a.classList = "btn btn-danger link-btn";
+                        a.href = deleteUrl;
+                        
+                        cell6.appendChild(a);
+
+                        // modify button
+                        var a1 = document.createElement('a')
+                        var mod = document.createTextNode("Modify")
+                        
+                        a1.appendChild(mod);
+                        a1.classList = "btn btn-primary";
+                        a1.href = modifyUrl;
+                        
+                        cell7.appendChild(a1);
+                        
+                        rowCount= rowCount+1;
+                    }
+                    else if(searchedItem == data.songs[j].genre.toLowerCase()){
+                        var row = output.insertRow(rowCount)
+                        var cell1 = row.insertCell(0)
+                        var cell2 = row.insertCell(1)
+                        var cell3 = row.insertCell(2)
+                        var cell4 = row.insertCell(3)
+                        var cell5 = row.insertCell(4)
+                        var cell6 = row.insertCell(5)
+                        var cell7 = row.insertCell(6)
+
+                        cell1.innerHTML = data.songs[j].id
+                        cell2.innerHTML = data.songs[j].song
+                        cell3.innerHTML = data.songs[j].movie
+                        cell4.innerHTML = data.songs[j].artist
+                        cell5.innerHTML = data.songs[j].genre
+
+                         // delete button 
+                         var a = document.createElement('a')
+                        var del = document.createTextNode("Delete")
+                        
+                        a.appendChild(del);
+                        a.classList = "btn btn-danger link-btn";
+                        a.href = deleteUrl;
+                        
+                        cell6.appendChild(a);
+
+                        // modify button
+                        var a1 = document.createElement('a')
+                        var mod = document.createTextNode("Modify")
+                        
+                        a1.appendChild(mod);
+                        a1.classList = "btn btn-primary";
+                        a1.href = modifyUrl;
+                        
+                        cell7.appendChild(a1);
+                        
+                        rowCount= rowCount+1;
+                    }else if(searchedItem == ''){
+                        output.innerHTML = "";
+                    }else{
+                        continue;
+                    }
+                }
+            })
+        }
+
+    </script>
+</body>
+</html>

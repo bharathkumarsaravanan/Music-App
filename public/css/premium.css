@@ -1,0 +1,90 @@
+body{
+    background-color: #413F42 !important; 
+    padding: 0;
+    margin: 0;
+    font: 1em sans-serif;
+    /* color: #CA955C !important; */
+    text-decoration: none;
+    align-content: center;
+    position: relative;
+    /* padding-left: 100px; */
+    box-sizing: border-box;
+ }  
+
+ .header{
+    color: aliceblue;
+    text-align: center;
+    margin-top: 70px;
+ }
+
+
+.plans{
+    display: flex;
+    gap: 100px;
+    /* background-color: red; */
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+    margin-top: 100px;
+    color: aliceblue;
+    position: relative;
+}
+
+.card-body{
+    background-color: #CA955C;
+    color: aliceblue;
+}
+.card{
+    box-shadow: 10px 15px 30px black;
+    transition: all 300ms ease-in-out;
+}
+
+.card:hover{
+    transform: scale(1.1);
+    z-index: 99;
+}
+
+.plan1{
+    position: absolute;
+    background-color: aliceblue;
+    color: black;
+    /* z-index: 99; */
+    width: 500px;
+    padding: 30px;
+    text-align: center;
+    border-radius: 30px;
+    height: 200px;
+    justify-items: center;
+    line-height: 30px;
+    top: 10px;
+    left: 300px;
+    opacity: 0;
+    transition: all 300ms ease-in-out;
+    z-index: 99; 
+    /* display: none; */
+
+
+    /* display: block; */
+    /* gap: 100px; */
+}
+
+
+
+#plan2{
+    z-index: 0;
+}
+#plan2{
+    z-index: 0;
+}
+
+.paybtn{
+    margin-top: 30px;
+}
+
+#p1:focus  + .plan1 {
+    /* display: block; */
+    /* background-color: red; */
+    opacity: 1;
+   
+}
+

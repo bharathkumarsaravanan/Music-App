@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel</title>
+</head>
+<body>
+    <form action="/admin/<%=admin%>/<%=id%>/approve" method="post" enctype="multipart/form-data">
+        <label for="songName"> Song name</label>
+        <input type="text" id="songName" name="songName" value="<%= oldData.song_name %>">
+
+        <label for="movieName">Movie name</label>
+        <select name="movieName" id="movieName">
+
+           <% for(var i = 0; i < movie.length; i++){ %>
+            <option <%= oldData.movie_name == movie[i].name ? 'selected' : '' %> value="<%= movie[i].id %>" > <%= movie[i].name %> </option>
+            <% } %>
+
+        </select>
+
+        <a href="/admin/<%=admin%>/<%=id%>/approve/add/movie">add</a>
+
+
+        <label for="genreName">genre</label>
+        <select name="genreName" id="genreName">
+        
+            <%for(var j = 0; j < genre.length; j++){ %>
+            <option value="<%= genre[j].id %>"><%= genre[j].name %> </option>
+            <%} %>
+
+        </select>
+        <a href="/admin/<%=admin%>/<%=id%>/approve/add/genre">add</a>
+
+        <label for="artistName">artist</label>
+        <select name="artistName" id="artistName">
+
+            <%for(var k = 0; k < artist.length; k++){ %>
+            <option value="<%=artist[k].id%>"><%= artist[k].name %> </option>
+            <%} %>
+        
+        </select>
+        <a href="/admin/<%=admin%>/<%=id%>/<%=path%>/add/artist">add</a>
+
+
+        <label for="file">select your music file</label>
+        <input type="file" name="musicFIle">
+
+        <label for="file2">select the image for song</label>
+        <input type="file" name="imageFile">
+
+        <button type="submit">Approve</button>
+
+    </form>
+</body>
+</html>

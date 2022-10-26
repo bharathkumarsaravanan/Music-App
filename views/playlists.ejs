@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>playlists</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <script src="https://kit.fontawesome.com/9ef23986b0.js" crossorigin="anonymous"></script>
+      <!-- bootstrap -->
+      <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js" integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk" crossorigin="anonymous"></script>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.min.js" integrity="sha384-ODmDIVzN+pFdexxHEHFBQH3/9/vQ9uori45z4JjnFsRydbmQbmL5t1tQ0culUzyK" crossorigin="anonymous"></script>  
+        <!-- google font -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Aboreto&display=swap" rel="stylesheet">  
+</head>
+<body>
+    <div class="playlist-head">
+       
+        <h1> <i class="fa-solid fa-music" style="font-size: 50px; margin-right: 10px;"></i>Playlists</h1>
+    </div>
+
+    <div class="create-playlist"><a href="/<%=user%>/playlists/create" class="create">create</a></div>
+
+    <div class="playlist-body">
+        <ul>
+            <% for(var i = 0; i < playlists.length; i++){ %>
+                <li class="playlists"><h2><a href="/<%=user%>/playlists/<%=playlists[i].id%>/songs" style="color: white; text-decoration: none;"><%=playlists[i].name%></a></h2></li>
+            <% } %>
+        </ul>
+    </div>
+    
+    
+</body>
+</html>

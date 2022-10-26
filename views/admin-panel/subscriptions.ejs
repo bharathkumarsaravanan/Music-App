@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+      <!-- css  -->
+      <link rel="stylesheet" href="/css/admin.css">
+      <!-- bootstrap -->
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+       <!-- font awesome -->
+      <script src="https://kit.fontawesome.com/9ef23986b0.js" crossorigin="anonymous"></script>
+      <!-- user graph -->
+      <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script> -->
+
+      <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+    <div class="user-graph">
+        <canvas id="myChart" style="width:600px;max-width:700px; height:400px;"></canvas>
+    </div>
+
+    <table class="table">
+        <th>
+            <td>s.no</td>
+            <td>plan</td>
+            <td>validity</td>
+            <td>amount</td>
+            <td>Users</td>
+        </th>
+
+        <form action="/admin/<%=admin%>/subscriptionsupdate" method="post" enctype="multipart/form-data">
+        <% for(var i = 0; i < plans.length; i++){ %>
+        <tr>
+            <td></td>
+            <td><%=i+1%></td>
+            <td><%=plans[i].name%></td>
+            <td><%=plans[i].validity%></td>
+            <td> <input type="text" value="<%=plans[i].amount%>" disabled id="<%=plans[i].id%>" name="<%=plans[i].id%>" oninput="enableupdate()" > </td>
+            <td><%=plans[i].count%></td>
+            <!-- <td><a href="/admin/<%=admin%>/plan/update" class="btn btn-info" style="margin-right: 20px;">Update</a> -->
+                <td> <button class="btn btn-info <%=plans[i].id%>" onclick="costUpdate('<%=plans[i].id%>')" type="button">update cost</button>
+                <a href="/admin/<%=admin%>/plan/block" class="btn btn-danger">Block Plan</a>
+            </td>
+        </tr>
+    <%}%>
+            <button type="submit" class="btn btn-primary" hidden style="margin-top: 15%; margin-left: 20%; position: absolute;">Update</button>
+</form>
+
+
+    </table>
+
+    <script>
+
+        function enableupdate(){
+            var update = document.getElementsByClassName('btn-primary')
+            update[0].removeAttribute('hidden');
+        }
+
+        var costUpdateCount = 0;
+
+        function costUpdate(id){
+            var textBox = document.getElementById(id);
+            var btn = document.getElementsByClassName(id);
+            var update = document.getElementsByClassName('btn-primary');
+            var value = textBox.getAttribute('value');
+
+            if(costUpdateCount === 0){
+                btn[0].innerHTML = 'Cancel'
+                textBox.removeAttribute('disabled')
+                textBox.focus();
+                costUpdateCount = 1
+            }else{
+                if(btn[0].innerHTML === 'Cancel'){
+                    update[0].setAttribute('hidden','');
+                }
+
+                btn[0].innerHTML = 'Update cost'
+                textBox.setAttribute('disabled','')
+                textBox.value = value;
+                costUpdateCount = 0; 
+
+            }
+          
+        }
+
+
+        fetch('http://localhost:3000/admin/<%=admin%>/subscriptionsupdate/graphdata')
+        .then((response) => response.json())
+        .then((graphdata) => {
+            console.log(graphdata.name)
+            var userCount = graphdata.graphdata.count;
+            var date = graphdata.graphdata.name;
+
+          const labels = date;
+
+            const data = {
+                labels: labels,
+                datasets: [{
+                label: 'New users',
+                backgroundColor: 'rgb(255, 99, 132)',
+                borderColor: 'rgb(255, 99, 132)',
+                data: userCount,
+                }],
+            };
+
+            const config = {
+                type: 'line',
+                data: data,
+                options: {
+                    scales: {
+                        y: {
+                            max: 30,
+                            min: 0,
+                            ticks: {
+                                stepSize: 2
+                            }
+                        }
+                    }
+                }
+            };
+
+            const myChart = new Chart(
+            document.getElementById('myChart'),
+            config
+            );
+        })
+    </script>
+    
+</body>
+</html>

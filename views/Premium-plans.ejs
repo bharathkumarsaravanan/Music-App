@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium</title>
+    <link rel="stylesheet" href="/css/premium.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+   </head>
+<body>
+    <div class="header"><h2>Premium Plans</h2></div>
+
+  
+
+    <div class="plans">
+
+        
+
+        <div class="card" style="width: 18rem;height: 400px;" id="plan1">
+            <img src="/images/premium/plan.jpg" class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title">Month/30 days</h5>
+              <p class="card-text">Enjoy ad-free music, offline playback, and more.</p>
+              <a href="/<%=id%>/plan/month/<%=plan[0].amount%>" class="btn btn-outline-light btn-lg " id="p1">₹<%=plan[0].amount%></a>
+            </div>
+          </div>
+         
+
+         
+
+          <div class="card" style="width: 18rem;height: 400px;" id="plan2">
+            <img src="/images/premium/plan.jpg" class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title">Season/90 days</h5>
+              <p class="card-text">Enjoy ad-free music, offline playback, and exciting offers.</p>
+              <a href="/<%=id%>/plan/season/<%=plan[1].amount%>" class="btn btn-outline-light btn-lg">₹<%=plan[1].amount%></a>
+            </div>
+    </div>
+
+
+            <div class="card " style="width: 18rem;height: 400px;" id="plan3">
+                <img src="/images/premium/plan.jpg" class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title">Year/365 days</h5>
+                  <p class="card-text">Enjoy ad-free music, offline playback, and exciting offers.</p>
+                  <a href="/<%=id%>/plan/year/<%=plan[2].amount%>" class="btn btn-outline-light btn-lg">₹<%=plan[2].amount%></a>
+                </div>
+          </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Songs</title>
+    <!-- css  -->
+    <link rel="stylesheet" href="/css/styles.css">
+    <!-- bootstrap -->
+    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous"> -->
+     <!-- font awesome -->
+    <script src="https://kit.fontawesome.com/9ef23986b0.js" crossorigin="anonymous"></script>
+    <!-- font family  -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=DynaPuff:wght@600&display=swap');
+    </style>
+</head>
+<body>
+
+
+    <div class="body-elements">
+
+        <!-- Header -->
+        <div class="user">
+            <div><a href="#"><i class="fa-solid fa-magnifying-glass" style="color:white;"></i></a></div>
+            <div><h4><i class="fa-solid fa-user" style="color:gray;"></i> <%=user[0].name%></h4></div>
+        </div>
+       
+
+    <div class="header" id="header-menu"  >
+        <div class="header-contents" style="color:white;" >
+            <div class="options-button" onclick="optionMenu()"><i class="fa-solid fa-bars" style="color:white;"  id="option-button"></i></div>
+
+            <div><a href="#" style="text-decoration: none;color: aliceblue;">
+                <div  class="header-options" id="op1">
+                    <div>HOME</div> <div><i class="fa-solid fa-house" style="color:white;"></i></div>
+                </div></a></div>
+
+            <div><a href="#" style="text-decoration: none;color: aliceblue;">    
+            <div class="header-options" id="op2">
+                <div>NOTIFICATIONS</div>
+                <div><i class="fa-solid fa-bell" style="color:white;color: aliceblue;"></i></div>
+            </div></a></div>
+
+            <div><a href="/<%=userId%>/podcasts" style="text-decoration: none;color: aliceblue;">
+                <div class="header-options" id="op3">
+                <div> PODCASTS </div>
+                <div><i class="fa-solid fa-guitar" style="color:white;"></i></div>
+            </div></a></div>
+
+            <div><a href="/<%=userId%>/playlists" style="text-decoration: none;color: aliceblue;">
+                <div class="header-options" id="op4">
+                    <div>YOUR LIBRARY</div>
+                    <div><i class="fa-solid fa-music" style="color:white;"></i></div>
+            </div></a></div>
+
+            <div> <div  class="settings-icon" style="text-decoration: none;color: aliceblue;">
+                <div class="header-options" id="op5" onclick="openSettings()">
+                    <div>SETTINGS</div>
+                    <div><i class="fa-solid fa-gear" style="color:white;"></i></div>              
+                </div></div> 
+                <div class="settings-options">
+                    <div class="set-op1 set-animate"><a href="/<%=userId%>/profile">PROFILE</a> </div>
+                    <div class="set-op2 set-animate"><a href="/<%=userId%>/plans">PLANS</a></div>
+                    <div class="set-op3 set-animate">CONFIGURATIONS</div>
+                    <div class="set-op4 set-animate"><a href="/<%=userId%>/logout">LOGOUT</a> </div>
+                </div>  
+            </div>
+               
+        </div>
+    </div>
+
+        <div class="icon">
+            <h1><i class="fa-solid fa-radio app-icon"></i></h1>
+        </div>
+       
+    </div>
+   
+    <!-- Header -->
+
+    <div class="vertical-scroll">
+
+
+    <div class="body-contents-index">
+    <!-- Playlists-index -->
+
+        <div class="playlist-container">
+            <div><h3>Playlists</h3></div>
+
+            <div class="main-scroll-div">
+            <div class="cover">
+            <div class="scroll-images">
+                <% for(var i = 0; i< playlist.length; i++){ %>
+                    <div class="child">
+                    <div class=" child-items">
+                        <div><a href="/<%=user%>/playlists/<%=playlist[i].id%>/songs" ><img src="\images\playlists\playlist.jpg" alt="" class="userIndexSonglist"></a></div>
+                        <div class="content"><%=playlist[i].name%></div>
+                      </div>
+                    </div>
+               
+            <% } %>
+            </div>
+            </div>
+            </div>
+        </div>
+
+    <!-- Playlists-index -->
+
+    <!-- New Realeased Index -->
+
+    <div class="newReleaseCover">
+        <div><h3>New Released</h3></div>
+
+        <div class="main-scroll-div">
+        <div class="cover">
+            <div class="scroll-images">
+            <% for(var i = 0; i < songs.length; i++){ %>
+                <div class="child">
+                <div class="child-items">
+                    <img src="/images/movies/<%=songs[i].moviepath%>" alt="" class="userIndexSonglist" onclick="play('<%=songs[i].audiopath%>')">
+                                        <audio class="audio-tag" id="<%=songs[i].audiopath%>">
+                                            <source src="/audios/<%=songs[i].audiopath%>">
+                                        </audio>
+                                        <h5 class="content"><%= songs[i].songname %></h5>
+                                        <h5 class="content faded"><%= songs[i].moviename %></h5>
+                </div>
+            </div>
+                <% } %> 
+            </div>   
+        </div>
+    </div>
+
+
+    </div>
+ 
+    <!-- New Realeased Index -->
+
+    <!-- artists -->
+
+    <div class="newReleaseCover">
+        <div><h3>Artists</h3></div>
+
+
+          <div class="main-scroll-div">
+        <div class="cover">
+            <div class="scroll-images">
+            <% for(var j = 0; j < artists.length; j++){ %>
+                <div class="child">
+                <div class="child=items">
+                    <a href="/<%=user%>/artists/<%=artists[j].id%>"><img src="/images/artists/<%=artists[j].image_path%>" alt="" class="userIndexSonglist"></a>
+                        <h5 class="content"><%= artists[j].name %></h5>
+                </div>
+            </div>
+                <% } %>      
+            </div>   
+        </div>
+    </div>
+
+
+
+    </div>
+
+    <!-- artists -->
+
+    <!-- movies-index  -->
+    <div class="newReleaseCover">
+        <div><h3>Movies</h3></div>
+
+        
+        <div class="main-scroll-div">
+            <div class="cover">
+                <div class="scroll-images">
+            <% for(var k = 0; k < movies.length; k++){ %>
+                <div class="child">
+                <div class="child-items">
+                    <a href="/<%=user%>/movies/<%=movies[k].id%>"><img src="/images/movies/<%=movies[k].image_path%>" alt="" class="userIndexSonglist"></a>
+                    <h5 class="content"><%= movies[k].name %></h5>
+                </div>
+            </div>
+                <% } %>      
+        </div>
+        </div>
+    </div>
+
+
+    </div>
+
+    <!-- movies-index  -->
+
+    <!-- random songs  -->
+
+        <div class="newReleaseCover">
+            <div><h3>Explore</h3></div>
+            
+        
+            <div class="main-scroll-div" id="main-scroll-div">
+                <div class="cover">
+                    <div class="scroll-images  random-songs">
+            <% for(var l = 0; l < randomsong.length; l++){ %>
+                <div class="child" <%= l == 0 ? 'id=first' : '' %> >
+                    <div class="child-items">
+                <div class="songList" >
+                    <div><img src="/images/movies/<%=randomsong[l].moviepath%>" alt="" class="playlistSongImage"></div>
+                    <div>
+                        <div class="wid content"><%=randomsong[l].song%></div>
+                        <div class="wid content faded"><%=randomsong[l].moviename%></div>
+                    </div>
+                    <div class="wid content faded"><%=randomsong[l].artistname%></div>
+                    <div class="navi-buttons">
+                        <div onclick="previous('<%= l %>')"><i class="fa-solid fa-backward navi"></i></div>
+
+                        <div onclick="randomplay('<%=randomsong[l].filepath%>', 'icon <%=randomsong[l].id%>')"><i class="fa-solid fa-play navi" id="icon <%=randomsong[l].id%>"></i></div>
+ 
+                        <div onclick="next('<%= l %>')"><i class="fa-solid fa-forward navi"></i></div>
+                    </div>
+                   <div><i class="fa-solid fa-ellipsis-vertical op-button"></i></div>
+                    <div>
+                        <audio id="<%=randomsong[l].filepath%>">
+                            <source src="/audios/<%=randomsong[l].filepath%>">
+                        </audio>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+                <% } %>
+        </div>
+        </div>
+    </div>
+
+
+    </div> 
+
+    <!-- random songs  -->
+
+    <!-- genres  -->
+
+    <div class="genre-item">
+       
+    <div class="newReleaseCover">
+        <div><h3>Genres</h3></div>
+
+
+        <div class="main-scroll-div">
+            <div class="cover">
+                <div class="scroll-images">
+            <% for(var m = 0; m < genres.length; m++){ %>
+                <div class="child">
+                <div class="child-items">
+                    <a href="/<%=user%>/genres/<%=genres[m].id%>"><img src="/images/genres/<%=genres[m].image_path%>" alt="" class="userIndexSonglist"></a>
+                    <h5 class="content"><%= genres[m].name %></h5>
+                </div>
+            </div>
+                <% } %>      
+        </div>
+        </div>
+    </div>
+
+
+    </div>
+</div>
+</div>
+</div>
+</div>
+
+
+
+
+    
+    <script>
+            var menuCount = 0;
+        function optionMenu(){
+            var menuBar = document.getElementById('header-menu')
+            var optionIcon = document.getElementById('option-button')
+            if(menuCount==0){
+                menuBar.classList.add('header-active');
+                optionIcon.classList.add('rotate')
+                menuCount = 1;
+            }else{
+                menuBar.classList.remove('header-active')
+                optionIcon.classList.remove('rotate')
+                menuCount = 0;
+            }
+        }
+
+        var openSettingsCount = 0;
+        function openSettings(){
+            var options = document.querySelectorAll('.set-animate')
+
+            console.log(options);
+
+            if(openSettingsCount == 0){
+                options.forEach(op => op.classList.add('set-animate-active'))
+                openSettingsCount = 1;
+            }else{
+                options.forEach(op => op.classList.remove('set-animate-active'))
+                openSettingsCount = 0;
+
+            }
+            // for(var i = 0; i< options.length; i++){
+            //     if(openSettingsCount == 0){
+            //     // options[i].classList.remove('set-animate')
+            //     options[i].classList.add('set-animate-active')
+            //     openSettingsCount = 1;
+            //     // console.log(options)
+            // }else{
+            //     options[i].classList.remove('set-animate-active')
+            //     // options[i].classList.add('set-animate')
+
+            //     openSettingsCount = 0;
+            // }
+            // }
+           
+        }
+        
+        var count = 0;
+
+        function play (id) {
+            var player = document.getElementById(id);
+
+            if(count == 0){
+                count =1;
+                player.play();
+
+            }else{
+                count=0;
+                player.pause();
+            }
+        }
+        var currentPlay; 
+        var currentIcon;
+        function randomplay (path,icon) {
+            var player = document.getElementById(path);
+            var playIcon = document.getElementById(icon);
+
+            if(count == 0){
+                count =1;
+                currentPlay = path;
+                currentIcon = icon;
+                player.play();
+
+                playIcon.classList.remove('fa-play')
+                playIcon.classList.add('fa-pause')
+
+
+            }else{
+                count=0;
+                currentPlay = "";
+                player.pause();
+                playIcon.classList.remove('fa-pause')
+                playIcon.classList.add('fa-play')
+               
+            }
+        }
+
+        function next(l,nextSong,nextIcon){
+            l = parseInt(l) + 1;
+            console.log('l: ' + l);
+            console.log('count: ' + count);
+            console.log(currentPlay);
+            var songElement = document.getElementById('first');  
+            var currentSong = document.getElementById(currentPlay);
+            var nextSong = document.getElementById(nextSong);
+            var nextIcon = document.getElementById(nextIcon);   
+            if(count == 1){
+                currentSong.pause();
+                currentIcon.classList.remove('fa-pause')
+                currentIcon.classList.add('fa-play')
+                count == 0;
+            }       
+            if(l < 5){
+            pixels = l * -800;
+            songElement.style.marginLeft = pixels + 'px' ;
+            nextSong.play();
+            nextIcon.classList.add('fa-pause');
+            nextIcon.classList.remove('fa-play');
+            count = 1;
+            currentSong = nextSong;
+            currentIcon = nextIcon;
+            }else{
+            l = 1
+            pixels = 0;
+            songElement.style.marginLeft = pixels + 'px';
+            }
+        }
+
+        function previous(l){
+            l = parseInt(l) + 1;
+            console.log('l: ' + l);
+            console.log('count: ' + count);
+            if(l > 1){
+            pixels = l * -800;
+            pixels = parseInt(pixels) + 1600;
+            console.log(pixels);
+            var songElement = document.getElementById('first');
+            songElement.style.marginLeft = pixels + 'px' ;
+            }else{
+            l = 1
+            pixels = 0;
+            var songElement = document.getElementById('first');
+            songElement.style.marginLeft = pixels + 'px';
+            }
+        }
+
+    </script>
+</body>
+</html>

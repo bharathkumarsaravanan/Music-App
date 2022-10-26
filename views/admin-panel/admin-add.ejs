@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel</title>
+     <!-- css  -->
+     <link rel="stylesheet" href="/css/admin.css">
+     <!-- bootstrap -->
+     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+      <!-- font awesome -->
+     <script src="https://kit.fontawesome.com/9ef23986b0.js" crossorigin="anonymous"></script>
+     <!-- user graph -->
+     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script> -->
+
+     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+    <div class="header">
+        <a href="/admin/<%=id%>/dashboard" class="header-content" style="text-decoration: none; color: #CA955C;">Dashboard</a>
+        <a href="/admin/<%=id%>/userinteractions" class="header-content" style="text-decoration: none; color: #CA955C;">User Interactions</a>
+        <a href="/admin/<%=id%>/requests" class="header-content" style="text-decoration: none; color: #CA955C;">Requests</a>
+        <a href="#" class="header-content" style="text-decoration: none; color: #CA955C;">Incomes</a>
+        <!-- <div href="/admin/<%=id%>/update" class="header-content" id="selected">Updates</div> -->
+
+        <div class="header-content" onclick="updates()">Updates </div>
+        
+        <div class="content-options" style="right: 450px; top: 40px;" id="updatesMenu">
+            <div id="op"><a href="/admin/<%=id%>/subscriptionsupdate" style="text-decoration: none; color: black" >Subscriptions</a></div>
+            <div id="op"><a href="/admin/<%=id%>/songupdate" style="text-decoration: none; color: black;" >Song Updates</a></div>
+        </div>
+
+        <a href="/admin/<%=id%>/songlist" class="header-content" style="text-decoration: none; color: #CA955C;">Song List</a>
+        <a href="/admin/<%=id%>/elements" class="header-content" style="text-decoration: none; color: #CA955C;">Groups</a>
+    </div>
+
+    <form action="/admin/<%=id%>/update" method="post" enctype="multipart/form-data" class="form song-add">
+        <div class="mb-3 row">
+            <label for="songName" class="col-sm-2 col-form-label"> Song name</label>
+            <div class="col-sm-10">
+                <input type="text" id="songName" name="songName" value="" class="form-control form-control-lg">
+            </div>
+        </div>
+        
+        <div class="mb-3 row">
+            <label for="movieName" class="col-sm-2 col-form-label">Movie name</label>
+            <div class="col-sm-10">
+                <select name="movieName" id="movieName" class="form-select">
+
+                <% for(var i = 0; i < movie.length; i++){ %>
+                    <option value="<%= movie[i].id %>" > <%= movie[i].name %> </option>
+                    <% } %>
+
+                </select>
+                <a href="/admin/<%=id%>/update/add/movie"><i class="fa-regular fa-plus add"></i></a>
+            </div>
+        </div>
+
+
+
+        <div class="mb-3 row">
+                <label for="genreName" class="col-sm-2 col-form-label">Genre</label>
+                <div class="col-sm-10">
+
+                    <select name="genreName" id="genreName" class="form-select"> 
+                    
+                        <%for(var j = 0; j < genre.length; j++){ %>
+                        <option value="<%= genre[j].id %>"><%= genre[j].name %> </option>
+                        <%} %>
+
+                    </select>
+                        <a href="/admin/<%=id%>/update/add/genre"><i class="fa-regular fa-plus add"></i></a>
+
+                </div>
+        </div>
+
+        <div class="mb-3 row">
+            <label for="artistName" class="col-sm-2 col-form-label">Artist</label>
+            <div class="col-sm-10">
+                <select name="artistName" id="artistName" class="form-select">
+
+                    <%for(var k = 0; k < artist.length; k++){ %>
+                    <option value="<%=artist[k].id%>"><%= artist[k].name %> </option>
+                    <%} %>
+                
+                </select>
+                <a href="/admin/<%=id%>/update/add/artist"><i class="fa-regular fa-plus add"></i></a>
+
+            </div>
+          
+        </div>
+
+        <div class="mb-3">
+            <label for="formFile" class="form-label">Select your music file</label>
+            <input type="file" name="musicFIle" class="form-control" id="formFile">
+        </div>
+
+        <div class="mb-3">
+            <label for="formFile2" class="form-label">Select your image file</label>
+            <input type="file" name="imageFile"  class="form-control" id="formFile2">
+            <div style="color: gray;">optional</div>
+        </div>
+
+
+        <button type="submit" class="btn btn-lg btn-primary" style="margin-left: 47%;">Approve</button>
+
+    </form>
+
+    <script>
+        var updatesMenuCount = 0;
+        function updates(){
+            var updatesMenu = document.querySelector('#updatesMenu');
+            if(updatesMenuCount === 0){
+                updatesMenu.classList.add('active')
+                updatesMenuCount = 1;
+            }else{
+                updatesMenu.classList.remove('active')
+                updatesMenuCount = 0;
+            }
+        }
+    </script>
+</body>
+</html>

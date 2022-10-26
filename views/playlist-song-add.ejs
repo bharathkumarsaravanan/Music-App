@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>songs</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <script src="https://kit.fontawesome.com/9ef23986b0.js" crossorigin="anonymous"></script>
+
+</head>
+<body>
+    <% for(var i = 0; i < songs.length; i++){ %>
+    <div class="songList">
+        <div><img src="/images/<%=imgFolder%>/<%=songs[i].imagepath%>" alt="" class="playlistSongImage"></div>
+        <div>
+            <div class="wid content"><%=songs[i].songname%></div>
+            <div class="wid content faded"><%=songs[i].moviename%></div>
+        </div>
+        <div class="wid content faded"><%=md[i].artistname%></div>
+        <div class="navi-buttons">
+            <div><i class="fa-solid fa-backward navi"></i></div>
+            <div><i class="fa-solid fa-play navi"></i></div>
+            <div><i class="fa-solid fa-forward navi"></i></div>
+        </div>
+       <div><i class="fa-solid fa-ellipsis-vertical op-button"></i></div>
+        <div>
+            <audio class="playlistAudio audiospace">
+                <source src="/audios/<%=songs[i].audiopath%>">
+            </audio>
+        </div>
+        <% if (playCheck.includes(songs[i].songid)) { %>
+            <div><a href="/<%=user%>/playlists/<%=playlistid%>/songs/remove/<%=songs[i].songid%>" id="<%=songs[i].songid%>" class="link" style="color: white; text-decoration:none">Remove</a></div>
+        <% } else { %>
+            <div><a href="/<%=user%>/playlists/<%=playlistid%>/songs/add/<%=songs[i].songid%>" id="<%=songs[i].songid%>" class="link" style="color: white; text-decoration:none">Add</a></div>
+        <% } %>
+    </div>
+    <% } %>
+
+    <script>
+
+    </script>
+</body>
+</html>
